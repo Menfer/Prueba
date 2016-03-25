@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
+    </head>
+    <body>
+<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+    
+     <title>Login View Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="lib/appframework/icons.css" />
+    <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css" />
+
+    <script type="text/javascript" charset="utf-8" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/fastclick.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/appframework/appframework.ui.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $("#main").bind("panelbeforeload", startApp);
+            // setup signin and signup button events
+            $("#login").on("click", function(){
+                signIn();
+            });
+
+            $("#register").on("click", function(){
+                signUp();
+            });
+
+        });
+
+        function signIn(){
+
+
+            // SIGNIN SERVER CALL CODE GOES HERE
+
+            valid_login = false;
+
+            if(valid_login){
+                $.afui.loadContent("#main", null, null, "fade");
+            }
+            else
+            {
+                //Example use of the error toast api
+                var opts={
+                    message:"Usuario y  contraseña incorrecta",
+                    position:"tc",
+                    delay:2000,
+                    autoClose:true,
+                    type:"error"
+                };
+                $.afui.toast(opts);
+            }
+        }
+
+        function signUp(){
+
+            //example client side validation
+            if ($("#password").val() === $("#confirmpassword").val())
+            {
+                // SIGNUP SERVER CALL CODE GOES HERE
+
+                //render main view
+                $.afui.loadContent("#main", null, null, "fade");
+
+                //Example use of the success toast
+                var opts={
+                    message:"Account Created",
+                    position:"tc",
+                    delay:2000,
+                    autoClose:true,
+                    type:"success"
+                };
+                $.afui.toast(opts);
+
+            }
+            else
+            {
+                //Example use of the error toast
+                var opts={
+                    message:"Passwords Don't Match",
+                    position:"tc",
+                    delay:2000,
+                    autoClose:true,
+                    type:"error"
+                };
+                $.afui.toast(opts);
+            }
+
+
+        }
+
+        function startApp(){
+            // clears all back button history
+            $.afui.clearHistory();
+
+            // your app code here
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="splashscreen" class='ui-loader heavy'>
+        App Framework - Login View
+        <br>
+        <br>
+        <span class='ui-icon ui-icon-loading spin'></span>
+        <h1>Starting app</h1>
+    </div>
+
+    <div class="view" id="mainview">
+        <header>
+            <h1>Login View Example</h1>
+        </header>
+
+        <div class="pages">
+
+            <!-- Welcome View -->
+            <div class="panel" data-title="Menú" id="page1" data-header="none" data-footer="none" selected="true">
+                <div style="text-align:center">
+                    <br>
+                    <br>
+                    <p>Bienvenidos</p>
+                    <br>
+                    <br>
+                </div>
+                <ul class="list inset">
+                    <li><a href="#signin" class="icon user" style="text-align:center">Inicio de Sesión</a></li>
+                    <li><a href="#signup" class="icon pencil" style="text-align:center">Registro</a></li>
+                </ul>
+            </div>
+
+            <!-- Login View -->
+            <div class="panel" data-title="Login" id="signin" data-footer="none">
+                <div style="text-align:center">
+                    <br>
+                    <br>
+                    <p>This is space for login message</p>
+                    <br>
+                    <br>
+                </div>
+                <input name="username" type="text" placeholder="Nombre de usuario" />
+                <input name="password" type="password" placeholder="password" />
+                <a class="button block" href="#" id="login">Inicio de sesión</a>
+            </div>
+
+            <!-- Register View -->
+            <div class="panel" data-title="Register" id="signup" data-footer="none">
+                <div style="text-align:center">
+                    <br>
+                    <br>
+                    <p>This is space for register message</p>
+                    <br>
+                    <br>
+                </div>
+                <input name="name" type="text" placeholder="Nombre" id="name" />
+                <input name="email" type="text" placeholder="E_mail" id="email" />
+                <input name="username" type="text" placeholder="Nombre de usuario" id="username" />
+                <input name="password" type="password" placeholder="Password" id="password" />
+                <input name="password2" type="password" placeholder="Confirmar Password" id="confirmpassword" />
+                <a class="button block" href="#" id="register">Registrar</a>
+            </div>
+
+            <!-- Main App View -->
+            <div class="panel" data-title="Start" id="main">
+                <p>This is App page after user has signed in...</p>
+            </div>
+        </div>
+    </div>
+</html>
